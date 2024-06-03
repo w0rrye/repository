@@ -1,0 +1,18 @@
+from telethon import TelegramClient, events
+
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+
+client = TelegramClient('session_name', api_id, api_hash)
+
+client.start()
+
+source_channel_username = 'source_channel_username'
+
+destination_channel_username = 'destination_channel_username'
+
+@client.on(events.NewMessage(chats=source_channel_username))
+async def forward_messages(event):
+    await client.forward_messages(destination_channel_username, event.message)
+
+client.run_until_disconnected()
